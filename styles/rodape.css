@@ -1,0 +1,30 @@
+.rodape-texto{
+padding:1em;
+background-color: var(--cor-do-fundo-navbar);
+display:grid;
+grid-template-columns: 47.5% 5% 47.5%;
+}
+
+.texto{
+   display:flex;
+   flex-direction: column;
+   gap:15px;
+}
+
+.texto-paragrafo{
+ font-size:1rem;
+}
+
+.Logo-principal{
+display: flex;
+justify-content: center;
+align-items: center;
+margin-right: 1em;
+}
+
+.linha-vertical {
+   width: 2px; 
+   height: 12em;
+   background-color: black;
+   margin-top: 0.6em;
+}
