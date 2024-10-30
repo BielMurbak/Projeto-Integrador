@@ -1,30 +1,90 @@
 .rodape-texto{
-padding:1em;
-background-color: var(--cor-do-fundo-navbar);
-display:grid;
-grid-template-columns: 47.5% 5% 47.5%;
-}
+   padding:1em;
+   background-color: var(--cor-do-fundo-navbar);
+   display:grid;
+   grid-template-columns:1fr 10px 1fr; /* Use fr para melhor responsividade */
+   width: 103%;
+   }
+   
+   .texto{
+      display:flex;
+      flex-direction: column;
+      width: 88%;
+      gap:15px;
+   }
+   .rodape{
+      width: 100%;
+   }
+   
+   .texto-paragrafo{
+    font-size:1rem;
+   
+   }
 
-.texto{
-   display:flex;
-   flex-direction: column;
-   gap:15px;
-}
+   .links-partes-site{
+      display: none;
+   }
+   
+   .Logo-principal{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin-right: 6px;
+   }
+   
+   .logo-rodape{
+   width: 100%;
+   height: 100%;
+   }
+   
+   .linha-vertical {
+      height: 12em;
+      background-color: black;
+      margin-top: 1.5em;
+      width: 2px;
+      margin-top: 0.7em;
+   }
 
-.texto-paragrafo{
- font-size:1rem;
-}
+   .linha-vertical2{
+      display: none;
+   }
+   
+   @media screen and (min-width:1440px){
+      .rodape-texto{
+         width: 100%;
+         display: flex;
+         flex-direction: row;
+         justify-content:left;
+         align-items: center;
+         }
 
-.Logo-principal{
-display: flex;
-justify-content: center;
-align-items: center;
-margin-right: 1em;
-}
-
-.linha-vertical {
-   width: 2px; 
-   height: 12em;
-   background-color: black;
-   margin-top: 0.6em;
-}
+         .links-partes-site{
+            display: block;
+            display: flex;
+            flex-direction: column;
+            gap:15px;
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            margin-left: 2em;
+            margin-right: 1em;
+         }
+         .links-partes-site a{
+            text-decoration: none ;
+            color: inherit; /* Mantém a cor do texto original */
+         }
+         .linha-vertical2{
+            display: block;
+            height: 12em;
+            background-color: black;
+            width: 2.9px;
+            margin-top: 0.7em;
+         }
+         .texto{
+            display:flex;
+            flex-direction: column;
+            width: 30%;
+            gap:15px;
+            margin-left: 2em;
+            align-items: left;
+         }
+   }

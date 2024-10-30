@@ -1,20 +1,23 @@
 .navbar{
     display:flex;
-    justify-content: space-around;
+    justify-content: space-between; 
     background-color: var(--cor-do-fundo-navbar);
     align-items: center;
+    width: 103%;
 }
 
 
 .hamburguer{
-    width: 3.85em;
-    height: 3.85em;
+    width: 55%;
+    position: relative;
+    margin-left: 1.5em;
+
 }
 
 .logo{
-    width: 11em;
-    height: 11em;
-    
+   width: 50%;
+   margin-right: 15px;
+
 }
 
 .header-principal{
@@ -24,6 +27,8 @@
    display: flex;
    justify-content: center;
    align-items: center;
+   width: 103%;
+ 
 }
 
 .header-principal-logo-pequena{
@@ -32,27 +37,26 @@
 }
 
 .header-principal-titulo{
-        color:black;
-        font-family: "Kufam", sans-serif;
-        font-weight: 1.5em;
-        font-style: "Regular";
-        font-weight: bold;
+color:black;
+font-family: "Kufam", sans-serif;
+font-weight: 1.5em;
+font-style: "Regular";
+font-weight: bold;
 }
 
 
 .input-hamburguer:checked ~ .menu-principal{
-    display: flex; 
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--cor-do-fundo-header-titulo);
-    gap:15px;
-   width: 14em;
-   height: 50em;
-   margin-top: 4em;
-   margin-right: 13em;
-   position: fixed; 
-   
+display: flex; 
+flex-direction: column;
+align-items: center;
+justify-content: center;
+background-color: var(--cor-do-fundo-header-titulo);
+gap:15px;
+width: 14em;
+height: 80em;
+margin-top: 4em;
+margin-right: 13em;
+position: fixed; 
 }
 .menu-principal-lista{
     position: relative;
@@ -68,6 +72,108 @@
     display: none;
 }
 
+.menu-principal-titulo{
+display:flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+}
+
+.menu-principal-lista a{
+position: relative;
+top:2em;
+text-decoration: none ;
+font-size: 1.5rem;
+color: inherit; 
+}
+
+.menu-principal-logo-hamburguer{
+    width: 3em;
+    height: 4em;
+    position: relative;
+    bottom:1em;
+}
+
+.menu-principal-foto-paragrafo{
+    position: relative;
+    bottom:0.5em;
+}
+.navbar-computador{
+    display: none;
+}
+
+@media screen and (min-width:1440px){
+   
+  .hamburguer{
+    display: none;
+  }
+
+  .navbar{
+    display: none;
+}
+
+.navbar-computador{
+    display: block;
+    display: flex;
+    flex-direction: row;
+    padding: 0.5em;
+    background-color: var(--cor-do-fundo-navbar);
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.conteiner-sessoes{
+display: flex;
+flex-direction: row;
+gap:12rem;
+justify-content: center;
+align-items: center;
+font-size: 2rem;
+}
+
+
+.conteiner-sessoes a{
+    font-size: 1.5rem;
+    text-decoration: none ;
+    color: inherit; /* Mantém a cor do texto original */
+}
+    
+.saiba-mais-conteiner-button{
+    width: 223px;
+    height: 62px;
+    background-color: var(--cor-do-botao-whatsapp);
+    border: none;
+    border-radius: 0.5em;
+    display:flex;
+flex-direction: row;
+justify-content:center;
+align-items: center;
+}
+.saiba-mais-conteiner-button a{
+    text-decoration: none ;
+    font-size: 1.3rem;
+    color: inherit; /* Mantém a cor do texto original */
+}
+
+.whatsapp{
+    margin-right: 1em;
+}
+
+.logo {
+width: 100%;
+position: relative;
+left: 4em;
+}
+.saiba-mais-conteiner{
+position: relative;
+right: 6em;
+}
+
+.header-principal{
+    width: 100%;
+}
+}
 
 
 

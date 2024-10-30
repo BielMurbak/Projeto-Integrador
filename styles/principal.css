@@ -1,3 +1,9 @@
 .principal{
-    padding:20em;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+border: 2px solid transparent;
+height: 50em;
+width: 100%;
 }
