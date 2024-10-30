@@ -1,0 +1,135 @@
+.Nome_projeto{
+    display: flex;
+    justify-content: center;
+    font-size: 2.3em;
+    margin-top: -8px;
+    font-family: 'Kufam', sans-serif;
+    text-shadow: 0px 4px 2px rgba(195, 195, 195, 3);
+}
+
+.logo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.img_logo{
+    width: 200px;
+    height: auto;
+}
+
+.sbv{
+    display: flex;
+    justify-content: center;
+    font-size: 1.5em;
+    margin-top: 30px;
+    font-family: 'Kufam', sans-serif;
+    text-shadow: 0px 4px 2px rgba(195, 195, 195, 3);
+}
+
+.rlogin{
+    display: flex;
+    justify-content: center;
+    font-size: 1.5em;
+    margin-top: 30px;
+    font-family: 'Kufam', sans-serif;
+    text-shadow: 0px 4px 2px rgba(195, 195, 195, 3);
+}
+
+.Login_container{
+   font-family: 'Kufam', sans-serif;
+   font-size: 0.8em;
+   display: flex;
+   align-items: center;
+   justify-self: center;
+   width: 350px;
+   height: 32px;
+   border-radius:10cm;
+   border: none;
+   background-color:#f0f0f0;
+   box-shadow: 0px 4px 2px rgba(195, 195, 195, 3); 
+   outline: none;
+   padding-left: 15px;
+}
+
+.Senha_container{
+    margin-top: -10px;
+    font-family: 'Kufam', sans-serif;
+    font-size: 0.8em;
+    display: flex;
+    align-items: center;
+    justify-self: center;
+    width: 350px;
+    height: 32px;
+    border-radius:10cm;
+    border: none;
+    background-color:#f0f0f0;
+    box-shadow: 0px 4px 2px rgba(195, 195, 195, 3); 
+    outline: none;
+    padding-left: 15px;
+ }
+
+ .checkbox{
+    display: flex;
+    justify-content: center;
+    font-size: 0.7em;
+    margin-right: 205px;
+    margin-top: -10px;
+    align-items: center;
+    font-family: 'Kufam', sans-serif;
+    text-shadow: 0px 4px 2px rgba(195, 195, 195, 3);
+ }
+
+ .bt_esqueci-senha{
+    font-size: 0.6em;
+    margin-top: 8px;
+    border: none;
+    background-color: #ffffff;
+    font-family: 'Kufam', sans-serif;
+    text-shadow: 0px 4px 2px rgba(195, 195, 195, 3);
+ }
+
+ .bt_entrar{
+    font-size: 1.3em;
+    margin-top: 30px;
+    width: 170px;
+    height: 50px;
+    border-radius: 20cm;
+    border: none;
+    background-color:#f0f0f0;
+    box-shadow: 0px 4px 2px rgba(195, 195, 195, 3); 
+    outline: none;
+    font-family: 'Kufam', sans-serif;
+    text-shadow: 0px 4px 2px rgba(195, 195, 195, 3);
+ }
+
+ .bt_cadastrar{
+    font-size: 1.3em;
+    margin-top: 30px;
+    width: 170px;
+    height: 50px;
+    border-radius: 20cm;
+    border: none;
+    background-color:#f0f0f0;
+    box-shadow: 0px 4px 2px rgba(195, 195, 195, 3); 
+    outline: none;
+    font-family: 'Kufam', sans-serif;
+    text-shadow: 0px 4px 2px rgba(195, 195, 195, 3);
+ }
+
+.entrar{
+    text-align: center;
+    justify-content: center;
+}
+
+@media(max-width:440px){
+    .Login_container{
+        width: 250px;
+    }
+    .Senha_container{
+        width: 250px;
+    }
+    .checkbox{
+        margin-right: 105px;
+    }
+}
