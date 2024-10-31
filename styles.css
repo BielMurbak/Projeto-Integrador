@@ -1,7 +1,7 @@
-@import url("styles/navbar.css"); 
+@import url("styles-homepage/navbar.css"); 
 @import url('https://fonts.googleapis.com/css2?family=Kufam:ital,wght@0,400..900;1,400..900&display=swap');
-@import url("styles/rodape.css");
-@import url("styles/principal.css");
+@import url("styles-homepage/rodape.css");
+@import url("styles-homepage/principal.css");
 
 :root{
     --cor-do-fundo:white;
