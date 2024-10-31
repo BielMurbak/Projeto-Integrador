@@ -1,0 +1,105 @@
+.Nome_projeto{
+    display: flex;
+    justify-content: center;
+    font-size: 2.3em;
+    margin-top: -8px;
+    font-family: 'Kufam', sans-serif;
+    text-shadow: 0px 4px 2px rgba(195, 195, 195, 3);
+}
+
+.logo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.img_logo{
+    width: 200px;
+    height: auto;
+}
+
+.ess{
+    display: flex;
+    justify-content: center;
+    font-size: 1.5em;
+    margin-top: 30px;
+    font-family: 'Kufam', sans-serif;
+    text-shadow: 0px 4px 2px rgba(195, 195, 195, 3);
+}
+
+.pfa{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    font-size: 1.2em;
+    margin-top: 10px;
+    font-family: 'Kufam', sans-serif;
+    text-shadow: 0px 4px 2px rgba(195, 195, 195, 3);
+}
+
+.Login_container{
+    margin-top: 20px;
+   font-family: 'Kufam', sans-serif;
+   font-size: 0.8em;
+   display: flex;
+   align-items: center;
+   justify-self: center;
+   width: 370px;
+   height: 32px;
+   border-radius:10cm;
+   border: none;
+   background-color:#f0f0f0;
+   box-shadow: 0px 4px 2px rgba(195, 195, 195, 3); 
+   outline: none;
+   text-indent: 20px;
+}
+
+.Email_container{
+    margin-top: -10px;
+    font-family: 'Kufam', sans-serif;
+    font-size: 0.8em;
+    display: flex;
+    align-items: center;
+    justify-self: center;
+    width: 370px;
+    height: 32px;
+    border-radius:10cm;
+    border: none;
+    background-color:#f0f0f0;
+    box-shadow: 0px 4px 2px rgba(195, 195, 195, 3); 
+    outline: none;
+    text-indent: 20px;
+ }
+
+ .bt_rec-senha{
+    font-size: 1.3em;
+    margin-top: 90px;
+    width: 290px;
+    height: 50px;
+    border-radius: 20cm;
+    border: none;
+    background-color:#f0f0f0;
+    box-shadow: 0px 4px 2px rgba(195, 195, 195, 3); 
+    outline: none;
+    font-family: 'Kufam', sans-serif;
+    text-shadow: 0px 4px 2px rgba(195, 195, 195, 3);
+    cursor: pointer;
+ }
+
+.botao{
+    text-align: center;
+    justify-content: center;
+}
+
+@media(max-width:440px){
+    .Login_container{
+        width: 250px;
+    }
+    .Email_container{
+        width: 250px;
+    }
+    .bt_rec-senha{
+        width: 250px;
+        font-size: 1em;
+    }
+}
