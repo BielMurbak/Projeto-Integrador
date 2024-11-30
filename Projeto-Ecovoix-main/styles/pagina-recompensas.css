@@ -1,0 +1,59 @@
+.conteiner-2{
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+gap:8em;
+margin-top: 5em;
+}
+
+.caixa-direita{
+display: flex;
+font-size: 4em;
+text-align: center;
+max-width: 40%;
+flex-direction: row;
+align-items: center;
+justify-content: center;
+}
+
+.caixa-direita strong{
+color:#127219;
+}
+
+.caixa{
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: center;
+}
+
+@media screen and (max-width:430px){
+
+.conteiner-2{
+display: flex;
+flex-direction:column-reverse;
+justify-content: center;
+align-items: center;
+gap:8em;
+margin-top: 5em;
+}
+
+.caixa-direita{
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: center;
+font-size: 4em;
+text-align: center;
+max-width: 100%;
+}
+
+.caixa-esquerda img {
+width: 95%;
+height: 100%;
+position: relative;
+left:0.5em;
+}
+
+}

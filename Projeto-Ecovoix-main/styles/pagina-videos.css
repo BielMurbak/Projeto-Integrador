@@ -1,0 +1,30 @@
+.box-assita-Ecoplay{
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: center;
+font-size: 2rem;
+margin-top: 2em;
+}
+
+.box-assita-Ecoplay strong{
+color:#127219;
+}
+
+.boxer-videos{
+margin-top: 3em;
+background-color:#c0bdbd;
+width: 326px;
+height:444px;
+display: flex;
+flex-direction:column;
+align-items: center;
+justify-content: center;
+}
+
+.boxer-catalogo img{
+position: relative;
+bottom:4em;
+}
+
+/* Este é um comentário em CSS */

@@ -1,0 +1,239 @@
+.box-cabecalho{
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
+background-color: #26AA2F;
+}
+
+.box-menu-hamburguer{
+display: none;
+}
+
+.box-logo-h1{
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: row;
+gap:0.5em;
+margin-left: 0.5em;
+}
+
+.box-sobre-contato{
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: row;
+gap:2em;
+margin-right: 2em;
+}
+
+.box-principal{
+background-image: url("../img/floresta.png");
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+height: 91.5vh;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+gap:15em;
+
+}
+
+.box-texto{
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+gap:2em;
+max-width: 80%;
+text-align: center;
+}
+
+.box-bttons{
+display: flex;
+gap:10em;
+}
+
+.box-texto-p1{
+font-size: 5rem;
+color:white;
+}
+
+.box-texto-p2{
+font-size: 3rem;
+color:white;
+}
+
+.box-sobre-contato h3{
+font-size: 1.5rem;
+cursor: pointer;
+}
+
+.box-logo-h1{
+font-size: 4rem;
+color:white;
+}
+
+.box-logo-h1 img{
+width: 25%;
+}
+
+@media screen and (max-width:430px){
+
+.box-cabecalho{
+height: 6em;
+}
+
+.box-dentro-menu-hamburguer{
+display: flex;
+align-items: center;
+flex-direction: column;
+justify-content: center;
+gap:2em;
+margin-top: 9.7em;
+font-size: 1.5rem;
+color:white;
+}
+
+.box-logo-h1 img{
+width: 30%;
+}
+
+
+.box-menu-hamburguer2{
+position: relative;
+left: 10em;
+bottom:13em;
+}
+
+.box-menu-hamburguer{
+display: block;
+margin-right: 20px;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.box-sobre-contato{
+display: none;
+}
+
+.box-logo-h1{
+font-size: 3.3rem;
+color:white;
+}
+
+.box-after-click.active {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+position: absolute; 
+background-color: #132511;
+width: 100%;
+height: 50%;
+}
+
+.box-logo-h1{
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: row;
+gap:0.1em;
+margin-left: 0.2em;
+}
+
+.box-texto-p1{
+font-size: 3rem;
+color:white;
+}
+
+.box-principal{
+background-image: url("../img/floresta.png");
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+height: 100vh;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+gap:12em;
+}
+
+.box-texto-p2{
+font-size: 2rem;
+color:white;
+}
+
+.box-texto{
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+gap:5em;
+max-width: 90%;
+text-align: center;
+}
+
+.box-bttons img{
+width: 16em;
+}
+
+.box-bttons{
+display: flex;
+flex-direction: column;
+gap:3em;
+}
+    
+}
+
+@media screen and (max-width:390px){
+.box-menu-hamburguer2 img{
+width: 80%;
+position: relative;
+right: 1.5em;
+}
+
+}
+
+@media screen and (max-width:370px){
+
+.box-logo-h1{
+font-size: 3rem;
+color:white;
+}
+.box-menu-hamburguer img{
+width: 80%;
+}
+
+}
+
+@media screen and (max-width:345px){
+
+.box-logo-h1 h1{
+font-size: 2.2rem;
+color:rgb(255, 255, 255);
+}
+}
+
+@media screen and (min-width:1920px){
+
+.box-logo-h1 h1{
+font-size: 6rem;
+color:rgb(255, 255, 255);
+}
+
+.box-texto-p1{
+font-size: 10rem;
+color:white;
+}
+
+.box-sobre-contato h3{
+font-size: 3rem;
+}
+
+}
