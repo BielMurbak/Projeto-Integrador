@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Board</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/taskboard.css">
+    <link rel = "stylesheet" href = "styles/reset.css">
+</head>
+
+<body>
+
+        <header class = "box-cabecalho">
+            <h1>Task Board</h1>
+    </header>
+
+        <nav class="box-interativa">
+            
+
+                <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="boardsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                Selecionar Board
+                </button>
+                <ul class="dropdown-menu dropdown-scroll" id="boardsList" aria-labelledby="boardsDropdown">
+                </ul>
+    </div>
+
+    <div>
+        <button id = "button">
+            Criar uma board
+        </button>
+            </div>
+                <div>
+                <span id="userName"></span>
+                <button id="logoutButton">Sair</button>
+                </div>
+                <div>
+                <label for="darkmode-toggle" class="switch">
+                <input type="checkbox" id="darkmode-toggle">
+                <span class="slider round"></span>
+                </label>
+                </div>
+    </nav>
+
+    <div class="container">
+      <h2 id="boardTitle">Título do Board</h2>
+      <div id="board" class="mt-4">Conteúdo do board</div>
+    </div>
+
+    <button id="create-column">Criar Bloco de Tarefas</button>
+    <div id="task-board-container"></div>
+
+    <script type="module" src="./scripts/pages/taskBoard.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+</body>
+</html>
