@@ -7,6 +7,8 @@ const logoutButton = document.getElementById("logoutButton");
 const boardTitle = document.getElementById("boardTitle");
 const boardLayout = document.getElementById("board");
 
+let currentBoardId = null; // Variável para armazenar o ID do board atual
+
 async function loadBoards() {
     try {
         const response = await fetch(`${API_BASE_URL}/Boards`);
@@ -21,23 +23,22 @@ async function loadBoards() {
 }
 
 function populateBoardsDropdown(boards) {
-    
     boards.forEach((board) => {
         const listItem = document.createElement("li");
         listItem.innerHTML = `<a class="dropdown-item" id="dropdown-item" value="${board.Id}">${board.Name}</a>`;
         listItem.addEventListener("click", (event) => {
-            // console.log(board.Id)
             boardTitle.innerHTML = event.target.innerHTML;
+            currentBoardId = board.Id; // Armazena o ID do board selecionado
             loadBoard(board.Id);
-        })
+        });
         boardsList.appendChild(listItem);
     });
 }
 
 async function loadBoard(id) {
     try {
-        const response = await fetch(`${API_BASE_URL}/ColumnByBoardId?BoardId=${id}`)
-        if(!response.ok) {
+        const response = await fetch(`${API_BASE_URL}/ColumnByBoardId?BoardId=${id}`);
+        if (!response.ok) {
             throw new Error("Erro ao carregar colunas");
         }
         const columns = await response.json();
@@ -48,36 +49,54 @@ async function loadBoard(id) {
 }
 
 function populateColumns(columns) {
-
-    boardLayout.innerHTML = ""; 
+    boardLayout.innerHTML = "";
 
     columns.forEach((column) => {
-
         const columnItem = document.createElement("article");
         columnItem.className = "column-item";
+        columnItem.dataset.columnId = column.Id;
 
         const columnHeader = document.createElement("header");
         columnHeader.className = "column-header";
-        columnHeader.innerHTML = `<h5>${column.Name}</h5>`;
+        columnHeader.innerHTML = `
+            <h5>${column.Name}</h5>
+            <button class="delete-column-btn">Excluir Coluna</button>
+            <button class="add-task-btn">Adicionar Tarefa</button>
+        `;
 
         const columnBody = document.createElement("div");
         columnBody.className = "column-body";
         columnBody.id = `tasks-${column.Id}`;
 
-
         columnItem.appendChild(columnHeader);
         columnItem.appendChild(columnBody);
-
-
         boardLayout.appendChild(columnItem);
 
-        fetchTasksByColumn(column.Id).then((res)=>{
-            addTasksToColumn(column.Id, res)
+        fetchTasksByColumn(column.Id).then((res) => {
+            addTasksToColumn(column.Id, res);
         });
 
+        // Evento para excluir coluna
+        columnHeader.querySelector(".delete-column-btn").addEventListener("click", async () => {
+            const confirmDelete = confirm(`Tem certeza de que deseja excluir a coluna "${column.Name}"?`);
+            if (confirmDelete) {
+                try {
+                    await deleteColumn(column.Id);
+                    // Após excluir a coluna da API, remove a coluna da interface
+                    columnItem.remove();
+                } catch (error) {
+                    console.error("Erro ao excluir a coluna:", error);
+                }
+            }
+        });
 
+        // Evento para adicionar tarefa
+        columnHeader.querySelector(".add-task-btn").addEventListener("click", () => {
+            addTask(column.Id);
+        });
     });
 }
+
 
 function fetchTasksByColumn(columnId) {
     const endpoint = `${API_BASE_URL}/TaskBoard_CS/rest/TaskBoard/TasksByColumnId?ColumnId=${columnId}`;
@@ -94,23 +113,50 @@ function fetchTasksByColumn(columnId) {
         });
 }
 
-function addTasksToColumn(columnId, tasks) {
-    const columnBody = document.getElementById(`tasks-${columnId}`);
+async function addTask(columnId) {
+    const taskTitle = prompt("Digite o título da nova tarefa:");
+    if (!taskTitle) return; // Se não houver título, retorna sem fazer nada
 
-    tasks.forEach((task) => {
-        const taskItem = document.createElement("div");
-        taskItem.className = "task-item";
-        taskItem.innerHTML = `
-            <h6>${task.Title || "Sem título"}</h6>
-            <p>${task.Description || "Sem descrição"}</p>
-        `;
-        columnBody.appendChild(taskItem);
+    // 1. Cria a tarefa localmente (na interface)
+    const columnBody = document.getElementById(`tasks-${columnId}`);
+    const taskItem = document.createElement("div");
+    taskItem.className = "task-item";
+    taskItem.innerHTML = `
+        <h6>${taskTitle}</h6>
+        <button class="delete-task-btn">Excluir Tarefa</button>
+    `;
+    taskItem.querySelector(".delete-task-btn").addEventListener("click", () => {
+        taskItem.remove();
+        deleteTaskFromBackend(columnId, taskItem); // Excluir tarefa do backend quando removida da interface
     });
+
+    columnBody.appendChild(taskItem);
+
+    // 2. Envia a tarefa para o backend (API) para salvar
+    addTaskToColumn(columnId, taskTitle);
+}
+
+async function addTaskToColumn(columnId, taskTitle) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/AddTask`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ columnId, taskTitle }),
+        });
+        if (response.ok) {
+            const newTask = await response.json();
+            console.log("Tarefa adicionada:", newTask);
+        } else {
+            throw new Error("Erro ao adicionar tarefa");
+        }
+    } catch (error) {
+        console.error("Erro ao adicionar tarefa:", error);
+    }
 }
 
 function loadUserName() {
     const userName = getFromLocalStorage("user");
-    console.log(userName)
+    console.log(userName);
     if (userName.name) {
         userNameSpan.textContent = `Olá, ${userName.name.split(' ')[0]}`;
     } else {
@@ -122,7 +168,6 @@ logoutButton.addEventListener("click", () => {
     localStorage.removeItem("user");
     window.location.href = "index.html";
 });
-
 
 function init() {
     loadUserName();
@@ -141,7 +186,6 @@ function toggleTheme() {
     }
 }
 
-// Função para aplicar o tema
 function applyTheme(theme) {
     if (theme === 'dark') {
         document.body.classList.add('dark-theme');
@@ -150,21 +194,17 @@ function applyTheme(theme) {
         document.body.classList.add('light-theme');
         document.body.classList.remove('dark-theme');
     }
-    // Opcional: Salvar no localStorage
     localStorage.setItem('theme', theme);
 }
 
-// Função para carregar o tema salvo ou da API
 async function loadTheme() {
     try {
-        // Recuperar tema salvo no localStorage
         const savedTheme = localStorage.getItem('theme');
         
         if (savedTheme) {
             applyTheme(savedTheme);
             document.getElementById('darkmode-toggle').checked = savedTheme === 'dark';
         } else {
-            // Buscar tema pela API
             const response = await fetch('https://personal-ga2xwx9j.outsystemscloud.com/TaskBoard_CS/rest/TaskBoard/Themes');
             const data = await response.json();
             const activeTheme = data.find(theme => theme.Is_Active);
@@ -180,165 +220,77 @@ async function loadTheme() {
     }
 }
 
-// Adicionar evento ao checkbox
 document.getElementById('darkmode-toggle').addEventListener('change', toggleTheme);
-
-// Carregar tema ao iniciar a página
 loadTheme();
-
 
 const taskBoardContainer = document.getElementById('task-board-container');
 const createColumnBtn = document.getElementById('create-column');
 
-// Função para criar um bloco de tarefas
-function createTaskBlock() {
-    const blockTitle = prompt('Digite o nome do bloco de tarefas:');
-    if (!blockTitle) return;
-
-    const block = document.createElement('div');
-    block.classList.add('task-block');
-
-    block.innerHTML = `
-        <h3>${blockTitle}</h3>
-        <ul class="task-list"></ul>
-        <button class="add-task-btn">Adicionar Tarefa</button>
-        <button class="delete-block-btn">Excluir Bloco</button>
-    `;
-
-    // Eventos para os botões
-    const addTaskBtn = block.querySelector('.add-task-btn');
-    const deleteBlockBtn = block.querySelector('.delete-block-btn');
-
-    addTaskBtn.addEventListener('click', () => addTask(block));
-    deleteBlockBtn.addEventListener('click', () => deleteBlock(block));
-
-    taskBoardContainer.appendChild(block);
-
-    // Salvar no Local Storage e na API
-    saveBlocksToLocalStorage();
-    sendToAPI(getBlocksData());
-}
-
-// Função para adicionar uma tarefa
-function addTask(block) {
-    const taskName = prompt('Digite o nome da tarefa:');
-    if (!taskName) return;
-
-    const taskList = block.querySelector('.task-list');
-    const task = document.createElement('li');
-    task.textContent = taskName;
-
-    // Permitir remover tarefa ao clicar nela
-    task.addEventListener('click', () => {
-        task.remove();
-        saveBlocksToLocalStorage();
-        sendToAPI(getBlocksData());
-    });
-
-    taskList.appendChild(task);
-
-    // Salvar no Local Storage e na API
-    saveBlocksToLocalStorage();
-    sendToAPI(getBlocksData());
-}
-
-// Função para excluir um bloco de tarefas
-function deleteBlock(block) {
-    if (confirm('Tem certeza de que deseja excluir este bloco?')) {
-        block.remove();
-        saveBlocksToLocalStorage();
-        sendToAPI(getBlocksData());
+// Função para adicionar coluna e salvar na API
+async function addColumn(columnName) {
+    if (!currentBoardId) {
+        alert("Nenhum board selecionado.");
+        return;
     }
-}
 
-// Função para salvar blocos no Local Storage
-function saveBlocksToLocalStorage() {
-    const blocks = getBlocksData();
-    localStorage.setItem('taskBlocks', JSON.stringify(blocks));
-}
+    if (!columnName) {
+        alert("O nome da coluna não pode estar vazio.");
+        return;
+    }
 
-// Função para carregar blocos do Local Storage
-function loadBlocksFromLocalStorage() {
-    const savedBlocks = JSON.parse(localStorage.getItem('taskBlocks')) || [];
-    savedBlocks.forEach((blockData) => {
-        const block = document.createElement('div');
-        block.classList.add('task-block');
-
-        block.innerHTML = `
-            <h3>${blockData.title}</h3>
-            <ul class="task-list">${blockData.tasks.map(task => `<li>${task}</li>`).join('')}</ul>
-            <button class="add-task-btn">Adicionar Tarefa</button>
-            <button class="delete-block-btn">Excluir Bloco</button>
-        `;
-
-        // Eventos para os botões
-        const addTaskBtn = block.querySelector('.add-task-btn');
-        const deleteBlockBtn = block.querySelector('.delete-block-btn');
-
-        addTaskBtn.addEventListener('click', () => addTask(block));
-        deleteBlockBtn.addEventListener('click', () => deleteBlock(block));
-
-        const taskList = block.querySelector('.task-list');
-        taskList.querySelectorAll('li').forEach((task) => {
-            task.addEventListener('click', () => {
-                task.remove();
-                saveBlocksToLocalStorage();
-                sendToAPI(getBlocksData());
-            });
-        });
-
-        taskBoardContainer.appendChild(block);
-    });
-}
-
-// Função para obter os dados dos blocos
-function getBlocksData() {
-    const blocks = [];
-    const taskBlocks = document.querySelectorAll('.task-block');
-
-    taskBlocks.forEach((block) => {
-        const title = block.querySelector('h3').textContent;
-        const tasks = Array.from(block.querySelectorAll('.task-list li')).map(task => task.textContent);
-        blocks.push({ title, tasks });
-    });
-
-    return blocks;
-}
-
-// Função para enviar dados para a API
-async function sendToAPI(data) {
     try {
-        const response = await fetch('https://personal-ga2xwx9j.outsystemscloud.com/TaskBoard_CS/rest/TaskBoard', {
+        const response = await fetch(`https://personal-ga2xwx9j.outsystemscloud.com/TaskBoard_CS/rest/TaskBoard/Column`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ blocks: data }),
+            body: JSON.stringify({ boardId: currentBoardId, Name: columnName }), // Aqui estamos usando "Name" em vez de "columnName"
         });
-        const result = await response.json();
-        console.log('Dados enviados para a API:', result);
+
+        if (response.ok) {
+            const newColumn = await response.json();
+            console.log("Coluna adicionada:", newColumn);
+            loadBoard(currentBoardId); // Recarrega as colunas após adicionar
+        } else {
+            throw new Error("Erro ao adicionar coluna");
+        }
     } catch (error) {
-        console.error('Erro ao enviar dados para a API:', error);
+        console.error("Erro ao adicionar coluna:", error);
     }
 }
 
-// Evento para criar nova coluna
-createColumnBtn.addEventListener('click', createTaskBlock);
+async function deleteColumn(columnId) {
+    try {
+        const response = await fetch(`https://personal-ga2xwx9j.outsystemscloud.com/TaskBoard_CS/rest/TaskBoard/Column?ColumnId=${columnId}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+        });
 
-// Carregar blocos ao iniciar
-loadBlocksFromLocalStorage();
+        if (!response.ok) {
+            throw new Error("Erro ao excluir a coluna");
+        }
+
+        console.log(`Coluna com ID ${columnId} excluída com sucesso!`);
+    } catch (error) {
+        throw new Error(`Falha ao excluir a coluna com ID ${columnId}: ${error.message}`);
+    }
+}
 
 
+createColumnBtn.addEventListener('click', () => {
+    const columnName = prompt("Digite o nome da nova coluna:");
 
+    if (!columnName) {
+        alert("Nome da coluna inválido.");
+        return;
+    }
 
+    addColumn(columnName);
+});
 
-
-// Elementos DOM
 const createBoardButton = document.getElementById('button');
 const boardContainer = document.getElementById('board-container');
 
-// URL da API
 const apiUrl = 'https://personal-ga2xwx9j.outsystemscloud.com/TaskBoard_CS/rest/TaskBoard';
 
-// Função para criar uma nova board
 async function createBoard() {
     const boardName = prompt('Digite o nome da nova board:');
     if (!boardName) {
@@ -346,13 +298,11 @@ async function createBoard() {
         return;
     }
 
-    // Dados da board
     const boardData = {
         name: boardName,
     };
 
     try {
-        // Enviar solicitação POST para a API
         const response = await fetch(`${apiUrl}/boards`, {
             method: 'POST',
             headers: {
@@ -361,30 +311,16 @@ async function createBoard() {
             body: JSON.stringify(boardData),
         });
 
-        // Verificar a resposta
-        if (response.ok) {
-            const newBoard = await response.json();
-            alert(`Board criada com sucesso: ${newBoard.name}`);
-            displayBoard(newBoard); // Mostrar na interface
-        } else {
-            const error = await response.json();
-            alert(`Erro ao criar a board: ${error.message}`);
+        if (!response.ok) {
+            throw new Error('Erro ao criar a board');
         }
+
+        const board = await response.json();
+        console.log('Nova board criada:', board);
+        loadBoards();
     } catch (error) {
-        console.error('Erro ao conectar à API:', error);
-        alert('Não foi possível criar a board. Verifique sua conexão.');
+        console.error('Erro ao criar board:', error);
     }
 }
 
-// Função para exibir uma board criada na interface
-function displayBoard(board) {
-    const boardElement = document.createElement('div');
-    boardElement.textContent = board.name;
-    boardElement.style.border = '1px solid #ccc';
-    boardElement.style.padding = '10px';
-    boardElement.style.margin = '10px 0';
-    boardContainer.appendChild(boardElement);
-}
-
-// Evento para criar uma nova board ao clicar no botão
 createBoardButton.addEventListener('click', createBoard);
